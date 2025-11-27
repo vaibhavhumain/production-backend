@@ -6,7 +6,17 @@ const authRoutes = require("./routes/auth");
 
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: ["http://localhost:3000","https://productiondashboards.netlify.app"],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  })
+);
+
+// Handle preflight manually (important)
+app.options("*", cors());
 app.use(express.json());
 
 connectDB();
